@@ -1,24 +1,22 @@
-## Readme
+## Using Plumber and Protobuf
 
 This is an ongoing effort to add protobuf reading and writing
 capabilities to Plumber. As of now it is possible to output
-protobuf, but not use input.
+protobuf, and use protobuf as input. Still *unelegantly*.
 
-This will correctly encode a string in plumber and respond
-with a serialized protobuf message, that we can unserialize:
-```
-curl -X GET http://localhost:8000/echodefault | protoc --decode=protoplumb.TestPayload prototest.proto
-
-## expected output:
-## a: "DEFAULT"
-```
-
-Now we should also be able to send a string, unserialize it in
+We can send a message, unserialize it in
 plumber, serialize it again, send it back and use protoc to 
-unserialize. This doesn't work yet:
+unserialize. This works at the moment:
+
 ```
-echo "a : 'abc'"  | protoc --encode=protoplumb.TestPayload prototest.proto | curl -X POST -d @- http://localhost:8000/echo | protoc --decode=protoplumb.TestPayload prototest.proto
+echo "a : 123"  | protoc --encode=protoplumb.TestPayload prototest.proto | curl -X POST --data-binary @- http://localhost:8000/echo | protoc --decode=protoplumb.TestPayload prototest.proto
 
 ## expected output:
-## a: "abc"
+## a: 123
 ```
+
+## TODO
+* ~~Add initial filter handling incoming protobuf messages~~
+* ~~Add initial serializer for responding with serialized protobuf~~
+* Filter that detects which type of message is being received
+* Serializing (`$new`) based on the type of message (get info from the header?)

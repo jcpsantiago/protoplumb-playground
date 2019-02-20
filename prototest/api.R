@@ -10,28 +10,9 @@
 #* @apiTitle Plumber Example API
 
 #* Echo back the input
-#* @param msg The message to echo
-#* @serializer contentType list(type = "Application/x-protobuf")
-#* @get /echodefault
-function(msg = "DEFAULT") {
-
-  p <- new(protoplumb.TestPayload,
-           a = msg)
-  
-  serialize(p, NULL)
-}
-
-#* Echo back the input
-#* @param msg The message to echo
-#* @serializer contentType list(type = "Application/x-protobuf")
+#* @param req The API request
+#* @serializer Protobuf
 #* @post /echo
 function(req) {
-  
-  req$rook.input$rewind()
-  inbound_message <- protoplumb.TestPayload$read(req$rook.input$read())
-  
-  p <- new(protoplumb.TestPayload,
-           a = inbound_message)
-  
-  serialize(p, NULL)
+  protoplumb.TestPayload$new(a = req$binaryBody$a)
 }
