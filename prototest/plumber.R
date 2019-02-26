@@ -1,20 +1,8 @@
 library(plumber)
 library(protopretzel)
 
-serializer_protobuf <- function() {
-  function(val, req, res, errorHandler) {
-    tryCatch({
-      res$setHeader("Content-Type", 
-                    paste0("application/x-protobuf; messagetype=", val@type))
-      res$body <- RProtoBuf::serialize(val, NULL)
-      return(res$toResponse())
-    }, error = function(e) {
-      errorHandler(req, res, e)
-    })
-  }
-}
-
-addSerializer("Protobuf", serializer_protobuf)
+# Needs to be added before API creation
+addProtobufSerializer()
 
 api <- plumber$new(here::here("prototest/api.R"))
 
