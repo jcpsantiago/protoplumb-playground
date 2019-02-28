@@ -14,21 +14,30 @@
 #* @serializer protoBuf
 #* @post /echo
 function(req) {
-  browser()
-  protoplumb.TestPayload$new(a = req$protobuf$protoplumb.TestPayload$a)
+  protoplumb.TestPayload$new(a = req$protobuf$protoplumb.TestPayload$a,
+                             b = req$protobuf$protoplumb.TestPayload$b)
 }
 
-#* Echo back the input
+#* Echo back the input, in a nested message
 #* @param req The API request
 #* @serializer protoBuf
 #* @post /nestedres
 function(req) {
-  #browser()
-  protoplumb.NestedPayload$new(test = 
-                                 list(new(protoplumb.TestPayload,
-                                          a = req$protobuf$protoplumb.TestPayload$a),
-                                      new(protoplumb.TestPayload,
-                                          a = req$protobuf$protoplumb.TestPayload$a)
-                                 )
+  protoplumb.NestedPayload$new(
+    nested =
+      new(protoplumb.TestPayload,
+        a = req$protobuf$protoplumb.TestPayload$a,
+        b = req$protobuf$protoplumb.TestPayload$b
+      )
   )
+}
+
+#* Echo back the input in a flat message
+#* @param req The API request
+#* @serializer protoBuf
+#* @post /flatres
+function(req) {
+  #browser()
+  protoplumb.TestPayload$new(a = req$protobuf$protoplumb.NestedPayload[[1]][[1]]$a,
+                             b = req$protobuf$protoplumb.NestedPayload[[1]][[1]]$b)
 }

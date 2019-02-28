@@ -4,4 +4,9 @@ package protoplumb;
 
 message TestPayload {
   int32 a = 1;
+  int32 b = 2;
+}
+
+message NestedPayload {
+    repeated TestPayload nested = 1;
 }
