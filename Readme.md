@@ -13,9 +13,9 @@ protoc --encode=protoplumb.TestPayload prototest.proto | \
 curl -v --header "Content-Type: application/x-protobuf; messagetype=protoplumb.TestPayload" -X POST --data-binary @- http://localhost:8000/echo | \
 protoc --decode=protoplumb.TestPayload prototest.proto
 
-## expected output:
-## a: 123
-## b: 456
+# expected output:
+# a: 123
+# b: 456
 ```
 
 the API can also reply with a different type of message (in this case nested):
@@ -40,10 +40,8 @@ curl -v --header "Content-Type: application/x-protobuf; messagetype=protoplumb.N
 protoc --decode=protoplumb.TestPayload prototest.proto
 
 # expected output:
-# nested {
-#   a: 123
-#   b: 456
-# }
+# a: 123
+# b: 456
 ```
 
 ### The Protobuf filter
