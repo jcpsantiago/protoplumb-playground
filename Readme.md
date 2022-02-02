@@ -1,3 +1,6 @@
+> I am not actively adding new code to this repository for now, since I am not using protobuf in any project.
+> I'll still review and merge any PRs or issues that appear though, so don't shy from contributing. 
+
 ## Using Plumber and Protobuf
 
 This is an ongoing effort to add protobuf reading and writing
